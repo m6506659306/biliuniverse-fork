@@ -35,5 +35,5 @@ http:
 
 script-providers:
   📺 BiliBili.Enhanced.response:
-    url: https://raw.githubusercontent.com/m6506659306/stash/main/response.bundle.custom.js
+    url: https://raw.githubusercontent.com/m6506659306/biliuniverse-fork/main/response.bundle.custom.js
     interval: 86400
