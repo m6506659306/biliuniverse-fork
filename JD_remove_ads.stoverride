@@ -1,0 +1,34 @@
+name: 京东去广告
+desc: 移除京东开屏广告，精简我的页面产品推广。
+category: 去广告
+
+http:
+  mitm:
+    - api.m.jd.com
+    - in.m.jd.com
+    - m.360buyimg.com
+  mock:
+    - match: '^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=(searchBoxWord|stationPullService|uniformRecommend[06])'
+      text: '{}'
+      status-code: 200
+      headers:
+        Content-Type: application/json
+    - match: '^https?:\/\/m\.360buyimg\.com\/mobilecms\/s1125x2436_jfs'
+      text: ' '
+      status-code: 200
+  script:
+    - name: 移除京东广告
+      match: ^https:\/\/api\.m\.jd\.com\/client\.action\?functionId=(deliverLayer|getTabHomeInfo|myOrderInfo|orderTrackBusiness|personinfoBusiness|start|welcomeHome)
+      type: response
+      require-body: true
+
+script-providers:
+  移除京东广告:
+    url: https://raw.githubusercontent.com/mist-whisper/Script/master/JD/JD_remove_ads.js
+    interval: 86400
+
+rules:
+  - DOMAIN,dns.jd.com,REJECT
+  - URL-REGEX,^http:\/\/\w{32}\.jddebug\.com\/diagnose\?,REJECT
+  - IP-CIDR,101.124.19.122/32,REJECT,no-resolve
+  - IP-CIDR6,2402:db40:5100:1011::5/128,REJECT,no-resolve
